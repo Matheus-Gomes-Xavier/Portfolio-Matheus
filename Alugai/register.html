@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro - AlugaAi</title>
+  <link rel="stylesheet" href="style_login_dashboard.css" />
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← Voltar ao início</a>
+    <h2>Criar Conta</h2>
+    <div id="error-msg" class="error-msg" style="display:none;"></div>
+    <form id="register-form">
+      <input type="text"     id="nome"  placeholder="Nome completo" required />
+      <input type="email"    id="email" placeholder="Email"         required />
+      <input type="password" id="senha" placeholder="Senha (mín. 6 caracteres)" required />
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p style="margin-top: 1rem; text-align: center;">
+      Já tem uma conta? <a href="login.html" style="color:#f39c12; text-decoration:none;">Entrar</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nome  = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+      const err   = document.getElementById('error-msg');
+
+      if (!nome || !email || !senha) {
+        err.textContent = 'Preencha todos os campos.';
+        err.style.display = 'block';
+        return;
+      }
+      if (senha.length < 6) {
+        err.textContent = 'A senha deve ter pelo menos 6 caracteres.';
+        err.style.display = 'block';
+        return;
+      }
+      // Simula cadastro bem-sucedido
+      sessionStorage.setItem('user', JSON.stringify({ nome, email }));
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

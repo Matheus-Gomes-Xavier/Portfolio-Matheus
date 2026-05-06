@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Minha Conta - AlugaAi</title>
+  <link rel="stylesheet" href="style_login_dashboard.css" />
+  <style>
+    body { align-items: flex-start; padding: 2rem 1rem; }
+    .container { max-width: 700px; }
+
+    .item-card {
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      border: 1px solid #2a2a2a;
+    }
+    .item-card summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #f39c12;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item-card summary::-webkit-details-marker { display: none; }
+    .item-card summary .badge {
+      font-size: 0.72rem;
+      background: #2a2a2a;
+      color: #aaa;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 400;
+    }
+    .item-card .edit-area {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .item-card input,
+    .item-card select,
+    .item-card textarea {
+      padding: 0.6rem 0.8rem;
+      border-radius: 7px;
+      border: none;
+      background: #2a2a2a;
+      color: #eee;
+      font-size: 0.95rem;
+      width: 100%;
+      margin-bottom: 0;
+    }
+    .item-card textarea { resize: vertical; min-height: 70px; }
+    .item-actions {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+    }
+    .btn-save {
+      background: #f39c12;
+      color: #121212;
+      font-weight: 700;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+    .btn-save:hover { background: #d87e04; }
+    .btn-delete {
+      background: transparent;
+      color: #e74c3c;
+      font-weight: 700;
+      border: 1px solid #e74c3c;
+      padding: 0.5rem 1rem;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .btn-delete:hover { background: #e74c3c; color: #fff; }
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+    }
+    .empty-state a { color: #f39c12; text-decoration: none; font-weight: 600; }
+    .add-btn {
+      display: inline-block;
+      background: #f39c12;
+      color: #121212;
+      font-weight: 700;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .add-btn:hover { background: #d87e04; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← Voltar ao início</a>
+
+    <div class="dashboard-header">
+      <h2>Meus Itens</h2>
+      <div style="display:flex; gap:0.8rem; align-items:center;">
+        <a href="cadastro_item.html" class="add-btn">+ Novo item</a>
+        <a href="index.html" id="logout-link" style="color:#f39c12; text-decoration:none; font-weight:600;">Sair</a>
+      </div>
+    </div>
+
+    <div id="itens-container"></div>
+  </div>
+
+  <script>
+    // Redireciona se não logado
+    const user = sessionStorage.getItem('user');
+    if (!user) window.location.href = 'login.html';
+
+    // Carrega itens do sessionStorage (simulando banco de dados)
+    function loadItens() {
+      return JSON.parse(sessionStorage.getItem('itens') || '[]');
+    }
+    function saveItens(itens) {
+      sessionStorage.setItem('itens', JSON.stringify(itens));
+    }
+
+    function renderItens() {
+      const itens = loadItens();
+      const container = document.getElementById('itens-container');
+
+      if (itens.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>Você ainda não cadastrou nenhum item.</p>
+            <a href="cadastro_item.html">Cadastrar primeiro item →</a>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = itens.map((item, idx) => `
+        <details class="item-card">
+          <summary>
+            ${escapeHtml(item.titulo)}
+            <span class="badge">${escapeHtml(item.categoria)}</span>
+          </summary>
+          <div class="edit-area">
+            <input type="text" id="titulo-${idx}" value="${escapeHtml(item.titulo)}" placeholder="Título" required />
+            <select id="cat-${idx}">
+              ${['cozinha','marcenaria','informatica','outros'].map(v =>
+                `<option value="${v}" ${item.categoria === v ? 'selected' : ''}>${capitalize(v)}</option>`
+              ).join('')}
+            </select>
+            <textarea id="desc-${idx}" placeholder="Descrição (opcional)">${escapeHtml(item.descricao)}</textarea>
+            <div class="item-actions">
+              <button class="btn-save" onclick="salvarItem(${idx})">Salvar</button>
+              <button class="btn-delete" onclick="apagarItem(${idx})">Apagar</button>
+            </div>
+          </div>
+        </details>
+      `).join('');
+    }
+
+    function salvarItem(idx) {
+      const itens = loadItens();
+      itens[idx].titulo    = document.getElementById(`titulo-${idx}`).value;
+      itens[idx].categoria = document.getElementById(`cat-${idx}`).value;
+      itens[idx].descricao = document.getElementById(`desc-${idx}`).value;
+      saveItens(itens);
+      renderItens();
+    }
+
+    function apagarItem(idx) {
+      if (!confirm('Tem certeza que deseja apagar este item?')) return;
+      const itens = loadItens();
+      itens.splice(idx, 1);
+      saveItens(itens);
+      renderItens();
+    }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    document.getElementById('logout-link').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.removeItem('user');
+      window.location.href = 'index.html';
+    });
+
+    renderItens();
+  </script>
+</body>
+</html>

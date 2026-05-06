@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlugaAi - Aluguel de Itens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="bg-dark text-white py-3 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h3 mb-0">Aluga-ai</h1>
+            <nav>
+                <a href="index.html" class="text-warning mx-2">Início</a>
+                <a href="cozinha.html" class="text-white mx-2">Cozinha</a>
+                <a href="marcenaria.html" class="text-white mx-2">Marcenaria</a>
+                <a href="informatica.html" class="text-white mx-2">Informática</a>
+                <a href="login.html" class="text-white mx-2">Login</a>
+                <a href="register.html" class="text-white mx-2">Registrar</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Carrossel -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div style="background: linear-gradient(135deg, #2c2c2c, #1a1a1a); height: 400px; display:flex; align-items:center; justify-content:center;">
+                    <div class="text-center text-white">
+                        <i class="fa fa-utensils" style="font-size:5rem; color:#f39c12;"></i>
+                        <h2 class="mt-3">Utensílios de Cozinha</h2>
+                        <p class="text-muted">Alugue o que precisar para sua cozinha</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div style="background: linear-gradient(135deg, #1a1a2e, #16213e); height: 400px; display:flex; align-items:center; justify-content:center;">
+                    <div class="text-center text-white">
+                        <i class="fa fa-hammer" style="font-size:5rem; color:#f39c12;"></i>
+                        <h2 class="mt-3">Ferramentas de Marcenaria</h2>
+                        <p class="text-muted">Tudo para seus projetos de construção</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div style="background: linear-gradient(135deg, #0f2027, #203a43); height: 400px; display:flex; align-items:center; justify-content:center;">
+                    <div class="text-center text-white">
+                        <i class="fa fa-laptop" style="font-size:5rem; color:#f39c12;"></i>
+                        <h2 class="mt-3">Equipamentos de Informática</h2>
+                        <p class="text-muted">Tecnologia quando você precisar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
+    </div>
+
+    <!-- Seção de Boas-vindas -->
+    <section class="py-5 text-center" style="background:#f39c12;">
+        <div class="container">
+            <h2 class="fw-bold mb-3">Encontre e alugue itens perto de você</h2>
+            <p class="text-muted">Ferramentas, utensílios e muito mais – disponível quando você precisar!</p>
+        </div>
+    </section>
+
+    <!-- Catálogo de Itens -->
+    <section class="py-5 catalog-section">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-white">Catálogo de Itens</h2>
+                <button class="btn btn-sm btn-outline-warning" onclick="toggleMap()">Localização</button>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="img/batedeira.jpg" class="card-img-top" alt="Batedeira">
+                        <div class="card-body">
+                            <h5 class="card-title">Batedeira</h5>
+                            <p class="card-text text-muted">Perfeita para preparar bolos e massas.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="login.html" class="btn btn-sm btn-warning">Alugar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="img/serra-eletrica.jpg" class="card-img-top" alt="Serra Elétrica">
+                        <div class="card-body">
+                            <h5 class="card-title">Serra Elétrica</h5>
+                            <p class="card-text text-muted">Ideal para trabalhos de marcenaria.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="login.html" class="btn btn-sm btn-warning">Alugar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="img/furadeira.jpg" class="card-img-top" alt="Furadeira">
+                        <div class="card-body">
+                            <h5 class="card-title">Furadeira</h5>
+                            <p class="card-text text-muted">Compacta e eficiente para pequenos reparos.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="login.html" class="btn btn-sm btn-warning">Alugar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="img/panela.jpg" class="card-img-top" alt="Panela de Pressão">
+                        <div class="card-body">
+                            <h5 class="card-title">Panela de Pressão</h5>
+                            <p class="card-text text-muted">Facilita o preparo de refeições rápidas.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="login.html" class="btn btn-sm btn-warning">Alugar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="img/escada.jpg" class="card-img-top" alt="Escada de Alumínio">
+                        <div class="card-body">
+                            <h5 class="card-title">Escada de Alumínio</h5>
+                            <p class="card-text text-muted">Segura e leve para alcançar lugares altos.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="login.html" class="btn btn-sm btn-warning">Alugar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="img/projetor.jpg" class="card-img-top" alt="Projetor">
+                        <div class="card-body">
+                            <h5 class="card-title">Projetor</h5>
+                            <p class="card-text text-muted">Perfeito para reuniões ou sessões de cinema em casa.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="login.html" class="btn btn-sm btn-warning">Alugar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Localização (oculta inicialmente) -->
+    <section id="location-section" class="py-5" style="display:none; background:#1e1e1e;">
+        <div class="container">
+            <h2 class="text-white mb-4">Encontre Itens Perto de Você</h2>
+            <div id="map" style="width:100%; height:400px; background:#2a2a2a; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                <p class="text-muted">Mapa carregando... (requer API Key do Google Maps em produção)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="bg-dark text-white py-3 text-center">
+        <p class="mb-0">&copy; 2025 Aluga-ai. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function toggleMap() {
+            const section = document.getElementById("location-section");
+            section.style.display = (section.style.display === "none") ? "block" : "none";
+        }
+    </script>
+</body>
+</html>
